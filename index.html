@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//bitmovin-a.akamaihd.net/bitmovin-player/stable/7/bitmovinplayer.js"></script>
+</head>
+<body>
+  <div id='player' style='width:1024px;'></div>
+  <script type="text/javascript">
+    var BITMOVIN_PLAYER_KEY    = '087d2ef5-9d39-43ed-a57a-16a312c87c0b';
+
+    var logEvent = function() {
+      console.log("Bitmovin:", arguments[0].type, JSON.stringify(arguments[0], null, '\t'));
+    };
+
+    var bitmovinEvents = {
+      onReady: logEvent,
+      onSubtitleAdded: logEvent,
+      onPlay: logEvent,
+      onPause: logEvent,
+      onSeek: logEvent,
+      onSeeked: logEvent,
+      onVolumeChange: logEvent,
+      onMute: logEvent,
+      onUnmute: logEvent,
+      onFullscreenEnter: logEvent,
+      onFullscreenExit: logEvent,
+      onPlaybackFinished: logEvent,
+      onError: logEvent,
+      onStartBuffering: logEvent,
+      onStopBuffering: logEvent,
+      onAudioChange: logEvent,
+      onSubtitleChange: logEvent,
+      onVideoDownloadQualityChange: logEvent,
+      onAudioDownloadQualityChange: logEvent,
+      onVideoPlaybackQualityChange: logEvent,
+      onAudioPlaybackQualityChange: logEvent,
+      onTimeChanged: logEvent,
+      onMetadata: logEvent,
+      onVideoAdaptation: logEvent,
+      onAudioAdaptation: logEvent,
+      onShowControls: logEvent,
+      onHideControls: logEvent,
+      onStopBuffering: logEvent,
+      onStartBuffering: logEvent,
+      onDownloadFinished: logEvent,
+      onCueEnter: logEvent
+    };
+
+    var playerConfig = {
+      key: BITMOVIN_PLAYER_KEY,
+      events: bitmovinEvents,
+      playback:{autoplay: false}
+    };
+
+    var source = {
+      //dash: 'https://secure-cf-c.ooyala.com/ZoMmd3NTE6zAFEYbLkU5hKXp8zF2ctK0/1/dash/1.mpd',
+      // drm: {
+      //   widevine: {
+      //     LA_URL: "https://player.ooyala.com/sas/drm2/BjcWYyOu1KK2DiKOkF41Z2k0X57l/ZoMmd3NTE6zAFEYbLkU5hKXp8zF2ctK0/widevine_modular/ooyala?auth_token=QWgvZ1RDUjdqNVM1UlVHZ1FKa1JXeXE1THcrcmVjdDBhZUhSai83U1U4bUxxemhQTlhQQVlYeW8xeC9JCm1XM1JVbG40ODRXQW9NOThpbGlBQS9pYkJHNkJScXZIckZPYXVseFZ6YzZPVzAySER2NG51T1p5OTAwYwp5ZWY3ekFrVm1lZThNb1dmekJwckxZVy9pM0xLbVJyQ1ZBbEJWZktlVThtRkRjV2dkWndBcjc1TlljQ0UKUmhaZXJkZVo0UmttNW5zQkFEdGxZZFNlSnVXbU1rWU9BR0gvWFN5dzNkQlY2bFlwd0FQVUVoTU52UFlTCjNNUW9haTU3Rzh1SlZTM09aMU9pZTgrMnNpVWNrc2lnUE1pWGxBPT0K",
+      //     mediaKeySystemConfig: { persistentState: 'required' }
+      //   }
+      // }
+      // hls: 'https://byubhls-i.akamaihd.net/hls/live/267187/byutvhls/master.m3u8'
+      // hls: 'https://acaooyalahd2-lh.akamaihd.net/i/TBN02_delivery@186240/master.m3u8'
+      // hls: 'https://acaooyalahd2-lh.akamaihd.net/i/TBN01_delivery@186239/master.m3u8'
+      // hls: 'https://siriusxm-priuatvideo.siriusxm.com/51b2ZhYzE6cMX6CwDZvBAlwoaC9shsC1/1/ts/1.m3u8?token=1513344241_2f5bca2f21a7683b89fce7c7ceda56e8'
+      hls: "https://player.ooyala.com/hls/proxy/J1aGJsZDE6eQ_hzQlNRcLx1Y_3sGBvsu/_.m3u8?source=https%3A%2F%2Fsecure-cf-c.ooyala.com%2FJ1aGJsZDE6eQ_hzQlNRcLx1Y_3sGBvsu%2F4%2Fts%2F4.m3u8&token=secure_ios_token%3DdFI3RmJmTHljMlBpcjhDeU5QRmlkZW1MZDJGWG9iN0hLTTdvSVVhQTgvUXJ0bHBkbkNnU1UxeDNuKzRaCnpsVmtXUzJnNDV6emNjNkFQSnJuVDVtbllBPT0K"
+    };
+
+    var player = bitmovin.player('player');
+
+    console.log(">>>>SETUP STARTED", player.isReady());
+    player.setup(playerConfig)
+    .then(function() {
+      console.log(">>>>SETUP COMPLETE", player.isReady());
+      var loadPromise = player.load(source);
+      console.log(">>>>LOAD STARTED", player.isReady());
+      return loadPromise;
+    }).then(function() {
+      console.log(">>>>SOURCE LOADED", player.isReady());
+    });
+  </script>
+</body>
+</html>
